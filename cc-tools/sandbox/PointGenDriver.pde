@@ -1,3 +1,5 @@
+final float EPSILON = 0.000001;
+
 class PointGenDriver {
     ArrayList<Point> points;
     
@@ -10,21 +12,30 @@ class PointGenDriver {
         // Start with the central point
         PVector center = new PVector(width / 2, height / 2);
         this.createPoint(center);
+        
         // Create the rings
-        for (int layer = 0; layer < layers; layer++) {
+        for (int layer = 1; layer < layers; layer++) {
             PVector firstPos = null;
             PVector previousPos = null;
-            for (float angle = 0; angle < 2 * PI; angle += PI / 3) {
-                
-                if (last == null) {
+            for (int arm = 0; arm < 7; arm++) {
+                float angle = arm * -PI / 3.0;
+                PVector currentPos = new PVector();
+                currentPos.x = cos(angle) * distance * layer;
+                currentPos.y = sin(angle) * distance * layer;
+                if (previousPos == null) {
                     // Create and store the first point
-                    first = 
+                    firstPos = currentPos;
+                } else {
+                    PVector path = PVector.sub(currentPos, previousPos);
+                    for (int offset = 1; offset < layer; offset++) {
+                        PVector pointPos = PVector.add(PVector.add(center, previousPos), PVector.mult(path, ((float) offset) / ((float) layer)));
+                        createPoint(pointPos);
+                    }
                 }
-                // Project the point
-                PVector trans = new PVector();
-                trans.x = cos(angle) * distance * layer;
-                trans.y = sin(angle) * distance * layer;
-                createPoint(PVector.add(center, trans));
+                if (arm < 6) {
+                    createPoint(PVector.add(center, currentPos));
+                }
+                previousPos = currentPos;
             }
         }
     }
@@ -39,5 +50,6 @@ class PointGenDriver {
         for (Point p : this.points) {
             p.render();
         }
+        text(this.points.size(), 25, 25);
     }
 }

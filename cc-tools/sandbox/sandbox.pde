@@ -4,7 +4,8 @@ final int CELL_PIXELS = 25;
 final color BACKGROUND_COLOR = color(0);
 final color CELL_COLOR = color(255, 0, 0);
 final float CHANCE_OF_LIFE = 0.45;
-final int POINT_LAYERS = 5;
+final int CAVE_STEPS = 7;
+final int POINT_LAYERS = 10;
 final float POINT_DISTANCE = 50;
 
 // ------
@@ -34,7 +35,7 @@ void setup() {
 void draw() {
     background(BACKGROUND_COLOR);
     if (GEN_TYPE == 0) {
-        // Cave gen
+        field.render();
     } else if (GEN_TYPE == 1) {
         // Bubble gen
         bubbles.simulate();
@@ -46,17 +47,11 @@ void draw() {
 
 void mouseClicked() {
     if (GEN_TYPE == 0) {
-        runCaveTool();
+        field.generateCave(CELL_COLOR, CELL_PIXELS, CHANCE_OF_LIFE, CAVE_STEPS);
     } else if (GEN_TYPE == 1) {
         bubbles = new BubblesDriver();
-        bubbles.fillBubbles(150, 300, 0.98);
+        bubbles.fillBubbles(150, 300, .98);
     } else if (GEN_TYPE == 2) {
         
     }
-}
-
-void runCaveTool() {
-    background(BACKGROUND_COLOR);
-    field.generateCave(CELL_COLOR, CELL_PIXELS, CHANCE_OF_LIFE, 5);
-    field.render();
 }

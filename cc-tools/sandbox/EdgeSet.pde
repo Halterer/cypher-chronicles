@@ -31,4 +31,8 @@ class EdgeSet {
             e.render();
         }
     }
+    
+    public int size() {
+        return this.edges.size();
+    }
 }

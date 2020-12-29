@@ -16,6 +16,9 @@ class Point {
     public void render() {
         fill(#C0C0C0);
         ellipse(this.position.x, this.position.y, POINT_DIAMETER, POINT_DIAMETER);
+        //fill(#FFFFFF);
+        //textSize(16);
+        //text(this.id, this.position.x, this.position.y);
     }
     
     public int id() {

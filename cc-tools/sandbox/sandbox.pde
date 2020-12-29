@@ -29,7 +29,7 @@ void setup() {
     field.initialize(CELL_COLOR, CELL_PIXELS, CHANCE_OF_LIFE);
     bubbles = new BubblesDriver();
     driver = new PointGenDriver();
-    driver.genPoints(POINT_LAYERS, POINT_DISTANCE);
+    driver.genGrid(POINT_LAYERS, POINT_DISTANCE);
 }
 
 void draw() {

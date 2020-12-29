@@ -2,13 +2,18 @@ final float EPSILON = 0.000001;
 
 class PointGenDriver {
     ArrayList<Point> points;
-    
+    EdgeSet edges;
     
     public PointGenDriver() {
         this.points = new ArrayList<Point>();
     }
     
-    public void genPoints(int layers, float distance) {
+    public void genGrid(int layers, float distance) {
+        this.genPoints(layers, distance);
+        this.genEdges();
+    }
+    
+    private void genPoints(int layers, float distance) {
         // Start with the central point
         PVector center = new PVector(width / 2, height / 2);
         this.createPoint(center);
@@ -40,6 +45,14 @@ class PointGenDriver {
         }
     }
     
+    private void genEdges() {
+        this.edges = new EdgeSet(this.points.size());
+        
+        for (int i = 0; i < this.points.size(); i++) {
+            
+        }
+    }
+    
     private void createPoint(PVector pos) {
         int id = this.points.size();
         Point point = new Point(pos, id);
@@ -50,6 +63,6 @@ class PointGenDriver {
         for (Point p : this.points) {
             p.render();
         }
-        text(this.points.size(), 25, 25);
+        this.edges.render();
     }
 }
